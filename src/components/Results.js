@@ -1,41 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { ThemeContext } from '../App';
 // import CountUp from 'react-countup';
 
 const ResultsSection = styled.section`
   padding: 8rem 0;
-  background-color: #fff;
+  background-color: transparent;
   position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, rgba(255, 107, 53, 0.03) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(10px);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(8px);
-  }
 `;
 
 const ResultsContainer = styled.div`
@@ -50,7 +22,7 @@ const ResultsTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   letter-spacing: -1px;
   font-family: 'Satoshi', sans-serif;
   text-align: center;
@@ -63,7 +35,7 @@ const ResultsTitle = styled.h2`
 const ResultsSubtitle = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-weight: 400;
   text-align: center;
   max-width: 750px;
@@ -75,7 +47,7 @@ const SectionTitle = styled.h3`
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 2.5rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   font-family: 'Satoshi', sans-serif;
   text-align: center;
   position: relative;
@@ -89,6 +61,7 @@ const SectionTitle = styled.h3`
     width: 60px;
     height: 3px;
     background-color: #FF6B35;
+    box-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 1px 4px rgba(255, 107, 53, 0.3)' : 'none'};
     border: none;
   }
 `;
@@ -109,11 +82,11 @@ const StatsGrid = styled.div`
 `;
 
 const StatCard = styled(motion.div)`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.cardBackground};
   border-radius: 16px;
   padding: 2.5rem 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 107, 53, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.2' : '0.05'});
+  border: 1px solid ${({ theme }) => theme.borderColor};
   transition: all 0.3s ease;
   text-align: center;
   position: relative;
@@ -121,27 +94,47 @@ const StatCard = styled(motion.div)`
   
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255, 107, 53, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.1'});
+    border-color: rgba(255, 107, 53, 0.4);
     
     .stat-icon {
       transform: scale(1.1);
-      background-color: rgba(255, 107, 53, 0.2);
+      background-color: rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.2'});
+      box-shadow: 0 8px 20px rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.35' : '0.25'});
     }
   }
   
   &::before {
     content: "";
     position: absolute;
-    top: -20px;
-    right: -20px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(
+      circle at top right,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.4)' : 'rgba(255, 107, 53, 0.25)'} 0%,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.12)'} 40%,
+      transparent 70%
+    );
     z-index: 0;
-    border: none;
-    filter: blur(5px);
+    border-radius: 0;
+    filter: blur(6px);
+  }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 140px;
+    height: 70px;
+    background: ${({ theme }) => theme.mode === 'dark' ? 
+      'linear-gradient(135deg, rgba(18, 18, 18, 0.4) 0%, transparent 100%)' : 
+      'linear-gradient(135deg, rgba(240, 240, 240, 0.4) 0%, transparent 100%)'
+    };
+    z-index: 0;
+    opacity: 0.6;
   }
 `;
 
@@ -152,24 +145,25 @@ const StatIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 107, 53, 0.1);
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.15)'};
   color: #FF6B35;
   border-radius: 50%;
   margin: 0 auto 1.5rem;
   transition: all 0.3s ease;
   position: relative;
+  box-shadow: 0 5px 15px rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.25' : '0.15'});
   
   &::after {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 1px dashed rgba(255, 107, 53, 0.2);
+    border: 1px dashed rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.4' : '0.3'});
     border-radius: 50%;
     top: 5px;
     left: 5px;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 `;
 
@@ -179,12 +173,13 @@ const StatNumber = styled.h4`
   color: #FF6B35;
   margin-bottom: 0.5rem;
   font-family: 'Satoshi', sans-serif;
+  text-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 2px 8px rgba(255, 107, 53, 0.3)' : 'none'};
 `;
 
 const StatLabel = styled.p`
   font-size: 1rem;
   line-height: 1.5;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
 `;
@@ -192,9 +187,9 @@ const StatLabel = styled.p`
 const Divider = styled.div`
   height: 1px;
   background: linear-gradient(90deg, 
-    rgba(255, 255, 255, 1) 0%, 
+    ${({ theme }) => theme.background} 0%, 
     rgba(255, 107, 53, 0.3) 50%, 
-    rgba(255, 255, 255, 1) 100%
+    ${({ theme }) => theme.background} 100%
   );
   margin: 4rem auto;
   max-width: 800px;
@@ -202,6 +197,8 @@ const Divider = styled.div`
 `;
 
 const Results = () => {
+  const { theme } = useContext(ThemeContext);
+  
   const clientGrowthStats = [
     {
       icon: "📈",

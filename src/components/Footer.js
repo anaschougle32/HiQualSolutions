@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { ThemeContext } from '../App';
 import whatsappIcon from '../assets/whatsapp.svg';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPinterestP } from 'react-icons/fa';
 // import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPinterestP } from 'react-icons/fa';
 
-const FooterSection = styled.footer`
-  background-color: #1A1A1A;
-  color: white;
+const FooterSection = styled.section`
   padding: 5rem 0 2rem;
+  background-color: ${({ theme }) => theme.mode === 'dark' ? '#0a0a0a' : '#222'};
+  color: #B0B0B0;
   position: relative;
   overflow: hidden;
   
   &::before {
     content: "";
     position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.03) 50%, rgba(0, 0, 0, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    filter: blur(50px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 107, 53, 0.3) 50%, 
+      transparent 100%
+    );
   }
 `;
 
@@ -77,7 +80,7 @@ const SocialIcon = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
@@ -152,10 +155,27 @@ const ContactIcon = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  min-width: 32px;
+  height: 32px;
+  background-color: rgba(255, 107, 53, 0.15);
   color: #FF6B35;
-  margin-right: 8px;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-size: 1rem;
+  box-shadow: 0 3px 10px rgba(255, 107, 53, 0.15);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed rgba(255, 107, 53, 0.3);
+    border-radius: 8px;
+    top: 3px;
+    left: 3px;
+    opacity: 0.7;
+    z-index: -1;
+  }
 `;
 
 const LocationTitle = styled.h5`
@@ -164,24 +184,23 @@ const LocationTitle = styled.h5`
   font-size: 1rem;
   margin: 1.2rem 0 0.8rem;
   font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
 `;
 
 const WhatsAppButton = styled.a`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: 1rem;
+  padding: 8px 15px;
   background-color: #25D366;
   color: white;
-  padding: 8px 15px;
-  border-radius: 6px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
   text-decoration: none;
-  margin-top: 1.2rem;
-  width: fit-content;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
   
   img {
     width: 20px;
@@ -190,8 +209,7 @@ const WhatsAppButton = styled.a`
   
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
-    background-color: #22c55e;
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
   }
 `;
 
@@ -206,6 +224,8 @@ const Copyright = styled.div`
 `;
 
 const Footer = () => {
+  const theme = useContext(ThemeContext);
+
   return (
     <FooterSection>
       <FooterContainer>
@@ -216,11 +236,21 @@ const Footer = () => {
               We specialize in strategic marketing for real estate professionals and interior designers. Our data-driven approach helps you attract consistent clients, showcase your properties and designs effectively, and build a strong market presence.
             </FooterText>
             <SocialIcons>
-              <SocialIcon href="#" aria-label="Facebook">f</SocialIcon>
-              <SocialIcon href="#" aria-label="Twitter">t</SocialIcon>
-              <SocialIcon href="#" aria-label="Instagram">i</SocialIcon>
-              <SocialIcon href="#" aria-label="LinkedIn">in</SocialIcon>
-              <SocialIcon href="#" aria-label="Pinterest">p</SocialIcon>
+              <SocialIcon href="#" aria-label="Facebook">
+                <FaFacebookF />
+              </SocialIcon>
+              <SocialIcon href="#" aria-label="Twitter">
+                <FaTwitter />
+              </SocialIcon>
+              <SocialIcon href="#" aria-label="Instagram">
+                <FaInstagram />
+              </SocialIcon>
+              <SocialIcon href="#" aria-label="LinkedIn">
+                <FaLinkedinIn />
+              </SocialIcon>
+              <SocialIcon href="#" aria-label="Pinterest">
+                <FaPinterestP />
+              </SocialIcon>
             </SocialIcons>
           </FooterColumn>
           

@@ -1,25 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { ThemeContext } from '../App';
 
 const AboutSection = styled.section`
   padding: 8rem 0;
-  background-color: #f8f9fa;
+  background-color: transparent;
   position: relative;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 100px;
-    left: -50px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(5px);
-  }
 `;
 
 const AboutContainer = styled.div`
@@ -46,7 +33,7 @@ const AboutContent = styled.div``;
 const AboutText = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   margin-bottom: 2rem;
   font-family: 'Poppins', sans-serif;
 `;
@@ -55,7 +42,7 @@ const AboutTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 2rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   letter-spacing: -1px;
   font-family: 'Satoshi', sans-serif;
   
@@ -75,14 +62,14 @@ const FeatureCard = styled(motion.div)`
   border-radius: 16px;
   position: relative;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 107, 53, 0.1);
-  background-color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid ${({ theme }) => theme.borderColor};
+  background-color: ${({ theme }) => theme.cardBackground};
+  box-shadow: 0 10px 30px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.2' : '0.05'});
   overflow: hidden;
   
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.1'});
     border-color: rgba(255, 107, 53, 0.3);
     
     &::before {
@@ -97,7 +84,7 @@ const FeatureCard = styled(motion.div)`
     right: 0;
     width: 100px;
     height: 100px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, ${({ theme }) => theme.gradientStart} 0%, ${({ theme }) => theme.gradientStart} 50%, ${({ theme }) => theme.gradientEnd} 70%);
     border-radius: 50%;
     transform-origin: top right;
     transition: transform 0.5s ease;
@@ -109,7 +96,7 @@ const FeatureCard = styled(motion.div)`
   h3 {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #2d3748;
+    color: ${({ theme }) => theme.text};
     margin-bottom: 1rem;
     font-family: 'Satoshi', sans-serif;
     position: relative;
@@ -130,12 +117,14 @@ const FeatureCard = styled(motion.div)`
   p {
     font-size: 1rem;
     line-height: 1.7;
-    color: #4a5568;
+    color: ${({ theme }) => theme.textSecondary};
     font-family: 'Poppins', sans-serif;
   }
 `;
 
 const AboutUs = () => {
+  const { theme } = useContext(ThemeContext);
+  
   return (
     <AboutSection id="about">
       <AboutContainer>

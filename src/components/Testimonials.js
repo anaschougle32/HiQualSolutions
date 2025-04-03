@@ -1,41 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { ThemeContext } from '../App';
 // import { FaStar } from 'react-icons/fa';
 
 const TestimonialsSection = styled.section`
   padding: 8rem 0;
-  background-color: #fff;
+  background-color: transparent;
   position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -80px;
-    left: -80px;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(10px);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    right: -50px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.01) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(8px);
-  }
 `;
 
 const TestimonialsContainer = styled.div`
@@ -50,7 +22,7 @@ const TestimonialsTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   letter-spacing: -1px;
   font-family: 'Satoshi', sans-serif;
   text-align: center;
@@ -63,7 +35,7 @@ const TestimonialsTitle = styled.h2`
 const TestimonialsSubtitle = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-weight: 400;
   text-align: center;
   max-width: 700px;
@@ -86,50 +58,70 @@ const TestimonialsGrid = styled.div`
 `;
 
 const TestimonialCard = styled(motion.div)`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.cardBackground};
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 107, 53, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.2' : '0.05'});
+  border: 1px solid ${({ theme }) => theme.borderColor};
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255, 107, 53, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.1'});
+    border-color: rgba(255, 107, 53, 0.4);
   }
   
   &::before {
     content: "";
     position: absolute;
-    top: -20px;
-    right: -20px;
+    top: 0;
+    right: 0;
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
+    background: radial-gradient(
+      circle at top right,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.4)' : 'rgba(255, 107, 53, 0.25)'} 0%,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.12)'} 40%,
+      transparent 70%
+    );
     z-index: 0;
-    border: none;
-    filter: blur(5px);
+    border-radius: 0;
+    filter: blur(6px);
+  }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 140px;
+    height: 70px;
+    background: ${({ theme }) => theme.mode === 'dark' ? 
+      'linear-gradient(135deg, rgba(18, 18, 18, 0.4) 0%, transparent 100%)' : 
+      'linear-gradient(135deg, rgba(240, 240, 240, 0.4) 0%, transparent 100%)'
+    };
+    z-index: 0;
+    opacity: 0.6;
   }
 `;
 
 const QuoteSymbol = styled.div`
   font-size: 4rem;
-  color: rgba(255, 107, 53, 0.1);
+  color: rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.4' : '0.2'});
   position: absolute;
   top: 20px;
   right: 20px;
   font-family: 'Georgia', serif;
   line-height: 1;
+  text-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 2px 8px rgba(255, 107, 53, 0.2)' : 'none'};
 `;
 
 const TestimonialText = styled.p`
   font-size: 1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   margin-bottom: 1.5rem;
   font-family: 'Poppins', sans-serif;
   position: relative;
@@ -148,13 +140,14 @@ const ClientImage = styled.div`
   border-radius: 50%;
   overflow: hidden;
   margin-right: 1rem;
-  background-color: rgba(255, 107, 53, 0.1);
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.1)'};
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FF6B35;
   font-size: 1.5rem;
   border: none;
+  box-shadow: 0 4px 10px rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.25' : '0.15'});
   
   img {
     width: 100%;
@@ -171,23 +164,23 @@ const ClientDetails = styled.div`
 const ClientName = styled.h4`
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   margin-bottom: 0.2rem;
   font-family: 'Satoshi', sans-serif;
 `;
 
 const ClientRole = styled.p`
   font-size: 0.9rem;
-  color: #718096;
+  color: ${({ theme }) => theme.textSecondary};
   font-family: 'Poppins', sans-serif;
 `;
 
 const ClientLogo = styled.div`
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'};
   font-weight: 600;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-size: 0.9rem;
   font-family: 'Satoshi', sans-serif;
   display: flex;
@@ -196,6 +189,7 @@ const ClientLogo = styled.div`
   span {
     color: #FF6B35;
     margin-right: 0.3rem;
+    text-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 1px 3px rgba(255, 107, 53, 0.3)' : 'none'};
   }
 `;
 
@@ -204,9 +198,12 @@ const StarRating = styled.div`
   font-size: 1rem;
   letter-spacing: 2px;
   margin-bottom: 1rem;
+  text-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 1px 5px rgba(255, 107, 53, 0.3)' : 'none'};
 `;
 
 const Testimonials = () => {
+  const { theme } = useContext(ThemeContext);
+  
   const testimonials = [
     {
       text: "HiQual Solutions transformed our real estate marketing strategy. We've seen a 68% increase in consistent lead generation, and our client acquisition has never been more steady. Their approach is both innovative and results-driven.",

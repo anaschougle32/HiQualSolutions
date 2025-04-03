@@ -1,41 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { supabase } from '../supabaseClient';
+import { ThemeContext } from '../App';
 
 const ContactSection = styled.section`
   padding: 8rem 0;
-  background-color: #f8f9fa;
+  background-color: transparent;
   position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(10px);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(8px);
-  }
 `;
 
 const ContactContainer = styled.div`
@@ -50,7 +22,7 @@ const ContactTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   letter-spacing: -1px;
   font-family: 'Satoshi', sans-serif;
   text-align: center;
@@ -63,7 +35,7 @@ const ContactTitle = styled.h2`
 const ContactSubtitle = styled.p`
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-weight: 400;
   text-align: center;
   max-width: 700px;
@@ -95,14 +67,14 @@ const InfoTitle = styled.h3`
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   font-family: 'Satoshi', sans-serif;
 `;
 
 const InfoText = styled.p`
   font-size: 1.05rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   margin-bottom: 2.5rem;
   font-family: 'Poppins', sans-serif;
 `;
@@ -115,23 +87,24 @@ const ContactDetail = styled.div`
 
 const ContactIcon = styled.div`
   font-size: 1.3rem;
-  width: 48px;
+  min-width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 107, 53, 0.1);
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.1)'};
   color: #FF6B35;
   border-radius: 12px;
   margin-right: 1rem;
   position: relative;
+  box-shadow: 0 4px 15px ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.1)'};
   
   &::after {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 1px dashed rgba(255, 107, 53, 0.2);
+    border: 1px dashed rgba(255, 107, 53, 0.3);
     border-radius: 12px;
     top: 5px;
     left: 5px;
@@ -144,23 +117,33 @@ const ContactDetailText = styled.div`
   h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #2d3748;
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.2rem;
     font-family: 'Satoshi', sans-serif;
   }
   
   p {
     font-size: 0.95rem;
-    color: #4a5568;
+    color: ${({ theme }) => theme.textSecondary};
     font-family: 'Poppins', sans-serif;
+    
+    a {
+      color: ${({ theme }) => theme.mode === 'dark' ? '#FF6B35' : '#FF6B35'};
+      text-decoration: none;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 `;
 
 const ContactForm = styled.form`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.cardBackground};
   border-radius: 20px;
   padding: 3rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.2' : '0.05'});
   position: relative;
   overflow: hidden;
   
@@ -171,11 +154,16 @@ const ContactForm = styled.form`
     right: -30px;
     width: 150px;
     height: 150px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(
+      circle,
+      ${({ theme }) => theme.gradientStart} 0%,
+      ${({ theme }) => theme.gradientMiddle} 40%,
+      ${({ theme }) => theme.gradientEnd} 70%
+    );
     border-radius: 50%;
     z-index: 0;
     border: none;
-    filter: blur(8px);
+    filter: blur(10px);
   }
   
   @media (max-width: 640px) {
@@ -211,11 +199,12 @@ const Input = styled.input`
   width: 100%;
   padding: 1rem 1.2rem;
   font-size: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
   border-radius: 12px;
-  background-color: #f8f9fa;
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#f8f9fa'};
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
+  color: ${({ theme }) => theme.text};
   
   &:focus {
     outline: none;
@@ -224,7 +213,7 @@ const Input = styled.input`
   }
   
   &::placeholder {
-    color: #a0aec0;
+    color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.4)' : '#a0aec0'};
   }
 `;
 
@@ -232,13 +221,14 @@ const TextArea = styled.textarea`
   width: 100%;
   padding: 1rem 1.2rem;
   font-size: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
   border-radius: 12px;
-  background-color: #f8f9fa;
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : '#f8f9fa'};
   min-height: 150px;
   resize: vertical;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
+  color: ${({ theme }) => theme.text};
   
   &:focus {
     outline: none;
@@ -247,7 +237,7 @@ const TextArea = styled.textarea`
   }
   
   &::placeholder {
-    color: #a0aec0;
+    color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 255, 255, 0.4)' : '#a0aec0'};
   }
 `;
 
@@ -367,6 +357,58 @@ const FormCheckbox = styled.div`
   }
 `;
 
+// Add styled components for the office titles
+const OfficeTitle = styled.h4`
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: ${({ theme }) => theme.text};
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 600;
+  position: relative;
+  padding-left: 0.8rem;
+  margin-top: 1.8rem;
+  margin-bottom: 1.2rem;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #FF6B35;
+    border-radius: 3px;
+  }
+`;
+
+// Add a styled component for the WhatsApp link
+const WhatsAppLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background-color: #25D366;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+  margin-top: 0.5rem;
+  
+  img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+    text-decoration: none !important;
+  }
+`;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -379,6 +421,7 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const { theme } = useContext(ThemeContext);
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -476,9 +519,7 @@ const Contact = () => {
                 </ContactDetailText>
               </ContactDetail>
               
-              <div style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "#2d3748", fontFamily: "'Satoshi', sans-serif" }}>Canada Office</h4>
-              </div>
+              <OfficeTitle>Canada Office</OfficeTitle>
               
               <ContactDetail>
                 <ContactIcon>📞</ContactIcon>
@@ -496,9 +537,7 @@ const Contact = () => {
                 </ContactDetailText>
               </ContactDetail>
               
-              <div style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "#2d3748", fontFamily: "'Satoshi', sans-serif" }}>India Office</h4>
-              </div>
+              <OfficeTitle>India Office</OfficeTitle>
               
               <ContactDetail>
                 <ContactIcon>📞</ContactIcon>
@@ -524,21 +563,14 @@ const Contact = () => {
                 <ContactDetailText>
                   <h4>WhatsApp</h4>
                   <p>
-                    <a 
+                    <WhatsAppLink 
                       href="https://wa.me/917738816466" 
                       target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ 
-                        color: "#25D366", 
-                        fontWeight: "500",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "4px"
-                      }}
+                      rel="noopener noreferrer"
                     >
-                      +91 773-881-6466
-                      <span style={{ fontSize: "0.8rem" }}>→</span>
-                    </a>
+                      <img src={require('../assets/whatsapp.svg').default} alt="WhatsApp" />
+                      Chat on WhatsApp
+                    </WhatsAppLink>
                   </p>
                 </ContactDetailText>
               </ContactDetail>

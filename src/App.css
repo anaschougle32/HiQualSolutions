@@ -10,15 +10,81 @@
 
 body {
   overflow-x: hidden;
-  background-color: #ffffff;
+  background-color: var(--background-color, #ffffff);
   color: #2d3748;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: #ffffff;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5f5f5' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-color: var(--background-color, #ffffff);
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Global theme colors */
+.App[data-theme="light"] {
+  --background-color: #ffffff;
+}
+
+.App[data-theme="dark"] {
+  --background-color: #121212;
+}
+
+/* Global gradient effects */
+.global-gradient {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(70px);
+  z-index: 0;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.top-left {
+  display: none; /* Hide the top-left gradient */
+}
+
+.top-right {
+  top: -150px;
+  right: -150px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(
+    circle,
+    var(--gradient-start, rgba(255, 107, 53, 0.15)) 0%,
+    var(--gradient-middle, rgba(255, 107, 53, 0.08)) 40%,
+    var(--gradient-end, rgba(255, 255, 255, 0)) 70%
+  );
+}
+
+.bottom-left {
+  bottom: -200px;
+  left: -200px;
+  background: radial-gradient(
+    circle,
+    var(--gradient-start, rgba(255, 107, 53, 0.15)) 0%,
+    var(--gradient-middle, rgba(255, 107, 53, 0.08)) 40%,
+    var(--gradient-end, rgba(255, 255, 255, 0)) 70%
+  );
+}
+
+/* Light theme gradient colors */
+.App[data-theme="light"] {
+  --gradient-start: rgba(255, 107, 53, 0.15);
+  --gradient-middle: rgba(255, 107, 53, 0.08);
+  --gradient-end: rgba(255, 255, 255, 0);
+}
+
+/* Dark theme gradient colors */
+.App[data-theme="dark"] {
+  --gradient-start: rgba(255, 107, 53, 0.3);
+  --gradient-middle: rgba(255, 107, 53, 0.15);
+  --gradient-end: rgba(18, 18, 18, 0);
 }
 
 .section-title {
@@ -46,44 +112,33 @@ body {
   padding: 0 2rem;
 }
 
+/* Create a consistent section styling */
 section {
   padding: 8rem 0;
   position: relative;
+  z-index: 1;
 }
 
-section::before {
-  content: "";
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 107, 53, 0.2) 0%, rgba(255, 107, 53, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
-  border-radius: 50%;
-  z-index: 0;
-}
+/* End of section styling changes */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Satoshi', sans-serif;
   font-weight: 700;
   letter-spacing: -0.5px;
   color: #2d3748;
+  transition: color 0.3s ease;
 }
 
 p {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   color: #4a5568;
+  transition: color 0.3s ease;
 }
 
 .highlight {
   color: #FF6B35;
   font-weight: 600;
-}
-
-.grid-background {
-  background-size: 50px 50px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
 }
 
 .button {
@@ -115,4 +170,25 @@ p {
 .button.outline:hover {
   background-color: #FF6B35;
   color: #ffffff;
+}
+
+/* Make sure the heading highlight rotation isn't affected by other CSS */
+h1 span[class*="HeadingHighlightUnderlined"] {
+  position: relative;
+  display: inline-block;
+  color: white !important;
+  z-index: 2;
+}
+
+h1 span[class*="HeadingHighlightUnderlined"]::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: #FF6B35 !important;
+  z-index: -1;
+  border-radius: 4px;
+  transform: rotate(-2deg) !important;
 } 

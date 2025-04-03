@@ -1,40 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { ThemeContext } from '../App';
 // import { FaUsers, FaChessKnight, FaLeaf, FaDollarSign, FaCogs, FaBullseye } from 'react-icons/fa';
 
 const ProcessSection = styled.section`
   padding: 8rem 0;
-  background-color: #f8f9fa;
+  background-color: transparent;
   position: relative;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    left: -50px;
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(5px);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50px;
-    right: -50px;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    border: none;
-    filter: blur(5px);
-  }
 `;
 
 const ProcessContainer = styled.div`
@@ -49,7 +22,7 @@ const ProcessTitle = styled.h2`
   font-size: 2.8rem;
   font-weight: 800;
   margin-bottom: 3rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   letter-spacing: -1px;
   font-family: 'Satoshi', sans-serif;
   
@@ -73,11 +46,11 @@ const ProcessGrid = styled.div`
 `;
 
 const ProcessCard = styled(motion.div)`
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.cardBackground};
   border-radius: 16px;
   padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 107, 53, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.2' : '0.05'});
+  border: 1px solid ${({ theme }) => theme.borderColor};
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -85,16 +58,13 @@ const ProcessCard = styled(motion.div)`
   
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255, 107, 53, 0.3);
-    
-    &::before {
-      transform: scale(1.2);
-    }
+    box-shadow: 0 15px 40px rgba(0, 0, 0, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.1'});
+    border-color: rgba(255, 107, 53, 0.4);
     
     .step-icon {
       transform: scale(1.1);
-      background-color: rgba(255, 107, 53, 0.2);
+      background-color: rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.3' : '0.2'});
+      box-shadow: 0 8px 20px ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.35)' : 'rgba(255, 107, 53, 0.25)'};
     }
   }
   
@@ -105,25 +75,30 @@ const ProcessCard = styled(motion.div)`
     right: 0;
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, rgba(255, 107, 53, 0.02) 50%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
+    background: radial-gradient(
+      circle at top right,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.4)' : 'rgba(255, 107, 53, 0.25)'} 0%,
+      ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.12)'} 40%,
+      transparent 70%
+    );
+    border-radius: 0;
     transform-origin: top right;
     transition: transform 0.5s ease;
     z-index: -1;
-    border: none;
-    filter: blur(3px);
+    filter: blur(6px);
   }
 `;
 
 const StepNumber = styled.div`
   font-size: 4.5rem;
   font-weight: 800;
-  color: rgba(255, 107, 53, 0.15);
+  color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.6)' : 'rgba(255, 107, 53, 0.4)'};
   position: absolute;
   top: 10px;
   right: 20px;
   line-height: 1;
   font-family: 'Satoshi', sans-serif;
+  text-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 2px 10px rgba(255, 107, 53, 0.3)' : 'none'};
 `;
 
 const StepIcon = styled.div`
@@ -133,12 +108,12 @@ const StepIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 107, 53, 0.1);
+  background-color: ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.2)' : 'rgba(255, 107, 53, 0.15)'};
   color: #FF6B35;
   border-radius: 12px;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+  box-shadow: 0 5px 15px ${({ theme }) => theme.mode === 'dark' ? 'rgba(255, 107, 53, 0.25)' : 'rgba(255, 107, 53, 0.15)'};
   position: relative;
   
   &::after {
@@ -146,12 +121,12 @@ const StepIcon = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 1px dashed rgba(255, 107, 53, 0.2);
+    border: 1px dashed rgba(255, 107, 53, ${({ theme }) => theme.mode === 'dark' ? '0.4' : '0.3'});
     border-radius: 12px;
     top: 5px;
     left: 5px;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 `;
 
@@ -159,7 +134,7 @@ const StepTitle = styled.h3`
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #2d3748;
+  color: ${({ theme }) => theme.text};
   position: relative;
   display: inline-block;
   font-family: 'Satoshi', sans-serif;
@@ -172,6 +147,7 @@ const StepTitle = styled.h3`
     width: 40px;
     height: 3px;
     background-color: #FF6B35;
+    box-shadow: ${({ theme }) => theme.mode === 'dark' ? '0 1px 4px rgba(255, 107, 53, 0.3)' : 'none'};
     border: none;
   }
 `;
@@ -179,13 +155,15 @@ const StepTitle = styled.h3`
 const StepDescription = styled.p`
   font-size: 1rem;
   line-height: 1.8;
-  color: #4a5568;
+  color: ${({ theme }) => theme.textSecondary};
   font-weight: 400;
   margin-top: 1.2rem;
   font-family: 'Poppins', sans-serif;
 `;
 
 const Process = () => {
+  const { theme } = useContext(ThemeContext);
+  
   const steps = [
     {
       number: "01",
