@@ -186,7 +186,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <PrimaryButton href="#contact">Get Started</PrimaryButton>
+            <PrimaryButton href="#contact">Get Free Consultation</PrimaryButton>
             <SecondaryButton href="#process">Learn More</SecondaryButton>
           </HeroButtons>
         </HeroContent>

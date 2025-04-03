@@ -1,23 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import whatsappIcon from '../assets/whatsapp.svg';
+// import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaPinterestP } from 'react-icons/fa';
 
 const FooterSection = styled.footer`
-  background-color: #222;
+  background-color: #1A1A1A;
   color: white;
-  padding: 4rem 0 2rem;
+  padding: 5rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.03) 50%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    filter: blur(50px);
+  }
 `;
 
 const FooterContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
 `;
 
 const FooterGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
   
   @media (max-width: 992px) {
     grid-template-columns: 1fr 1fr;
@@ -34,14 +52,20 @@ const FooterColumn = styled.div`
 
 const FooterLogo = styled.h3`
   font-size: 1.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  font-family: 'Satoshi', sans-serif;
+  letter-spacing: -0.5px;
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
 const FooterText = styled.p`
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #ccc;
-  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #B0B0B0;
+  margin-bottom: 1.8rem;
+  font-family: 'Poppins', sans-serif;
 `;
 
 const SocialIcons = styled.div`
@@ -55,24 +79,28 @@ const SocialIcon = styled.a`
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #333;
+  background-color: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
   
   &:hover {
-    background-color: #ff0000;
+    background-color: #FF6B35;
     transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(255, 107, 53, 0.2);
   }
 `;
 
 const FooterTitle = styled.h4`
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   margin-bottom: 1.5rem;
   position: relative;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   
   &::after {
     content: "";
@@ -81,7 +109,7 @@ const FooterTitle = styled.h4`
     bottom: -8px;
     width: 40px;
     height: 2px;
-    background-color: #ff0000;
+    background-color: #FF6B35;
   }
 `;
 
@@ -91,26 +119,80 @@ const FooterLinks = styled.ul`
 `;
 
 const FooterLink = styled.li`
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
   
   a {
-    color: #ccc;
+    color: #B0B0B0;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    display: inline-block;
     
     &:hover {
-      color: #ff0000;
+      color: #FF6B35;
+      transform: translateX(5px);
     }
+  }
+`;
+
+const ContactItem = styled(FooterLink)`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #B0B0B0;
+  font-family: 'Poppins', sans-serif;
+  
+  a {
+    display: inline-block;
+  }
+`;
+
+const LocationTitle = styled.h5`
+  color: white;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 1rem;
+  margin: 1.2rem 0 0.8rem;
+  font-weight: 600;
+`;
+
+const WhatsAppButton = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #25D366;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 1.2rem;
+  width: fit-content;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+  
+  img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+    background-color: #22c55e;
   }
 `;
 
 const Copyright = styled.div`
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid #333;
-  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 3rem;
   font-size: 0.9rem;
-  color: #999;
+  color: #888;
+  font-family: 'Poppins', sans-serif;
 `;
 
 const Footer = () => {
@@ -121,13 +203,14 @@ const Footer = () => {
           <FooterColumn>
             <FooterLogo>HiQual Solutions</FooterLogo>
             <FooterText>
-              We specialize in performance marketing that drives measurable results for interior design businesses. Our data-driven strategies help you acquire high-value clients and maximize ROI.
+              We specialize in strategic marketing for real estate professionals and interior designers. Our data-driven approach helps you attract consistent clients, showcase your properties and designs effectively, and build a strong market presence.
             </FooterText>
             <SocialIcons>
-              <SocialIcon href="#">f</SocialIcon>
-              <SocialIcon href="#">t</SocialIcon>
-              <SocialIcon href="#">i</SocialIcon>
-              <SocialIcon href="#">in</SocialIcon>
+              <SocialIcon href="#" aria-label="Facebook">f</SocialIcon>
+              <SocialIcon href="#" aria-label="Twitter">t</SocialIcon>
+              <SocialIcon href="#" aria-label="Instagram">i</SocialIcon>
+              <SocialIcon href="#" aria-label="LinkedIn">in</SocialIcon>
+              <SocialIcon href="#" aria-label="Pinterest">p</SocialIcon>
             </SocialIcons>
           </FooterColumn>
           
@@ -139,32 +222,66 @@ const Footer = () => {
               <FooterLink><a href="#process">Our Process</a></FooterLink>
               <FooterLink><a href="#results">Results</a></FooterLink>
               <FooterLink><a href="#testimonials">Testimonials</a></FooterLink>
+              <FooterLink><a href="#contact">Contact Us</a></FooterLink>
             </FooterLinks>
           </FooterColumn>
           
           <FooterColumn>
-            <FooterTitle>Services</FooterTitle>
+            <FooterTitle>Our Services</FooterTitle>
             <FooterLinks>
-              <FooterLink><a href="#">Lead Generation</a></FooterLink>
-              <FooterLink><a href="#">Brand Awareness</a></FooterLink>
-              <FooterLink><a href="#">Sales Funnel Setup</a></FooterLink>
-              <FooterLink><a href="#">Performance Marketing</a></FooterLink>
-              <FooterLink><a href="#">Conversion Tracking</a></FooterLink>
+              <FooterLink><a href="#">Property Marketing</a></FooterLink>
+              <FooterLink><a href="#">Design Portfolio Development</a></FooterLink>
+              <FooterLink><a href="#">Targeted Lead Generation</a></FooterLink>
+              <FooterLink><a href="#">Social Media Management</a></FooterLink>
+              <FooterLink><a href="#">SEO for Design Businesses</a></FooterLink>
+              <FooterLink><a href="#">Client Acquisition Systems</a></FooterLink>
             </FooterLinks>
           </FooterColumn>
           
           <FooterColumn>
-            <FooterTitle>Contact</FooterTitle>
+            <FooterTitle>Contact Us</FooterTitle>
             <FooterLinks>
-              <FooterLink><a href="mailto:info@hiqualsolutions.com">info@hiqualsolutions.com</a></FooterLink>
-              <FooterLink><a href="tel:+1234567890">+1 (234) 567-890</a></FooterLink>
-              <FooterLink>123 Business Avenue, Suite 456, New York, NY 10001</FooterLink>
+              <ContactItem>
+                <a href="mailto:contact@hiqualsolutions.com">contact@hiqualsolutions.com</a>
+              </ContactItem>
+              
+              <LocationTitle>Canada Office</LocationTitle>
+              <ContactItem>
+                <a href="tel:+19808423695">+1 980-842-3695</a>
+              </ContactItem>
+              <ContactItem>
+                4143 SETON DRIVE SE, CALGARY,<br />
+                ALBERTA, CANADA. T3M 3A6
+              </ContactItem>
+              
+              <LocationTitle>India Office</LocationTitle>
+              <ContactItem>
+                <a href="tel:+919867975473">+91 986-797-5473</a>
+              </ContactItem>
+              <ContactItem>
+                <a href="tel:+917738816466">+91 773-881-6466</a>
+              </ContactItem>
+              <ContactItem>
+                L-205, Old Nasheman Colony, Mumbra,<br />
+                Thane-400612, Maharashtra, India
+              </ContactItem>
+              
+              <WhatsAppButton href="https://wa.me/917738816466" target="_blank" rel="noopener noreferrer">
+                <img src={whatsappIcon} alt="WhatsApp" />
+                Chat on WhatsApp
+              </WhatsAppButton>
+              
+              <ContactItem style={{ marginTop: "15px" }}>
+                <a href="#contact" style={{ color: "#FF6B35", fontWeight: "500" }}>
+                  Get a Free Consultation →
+                </a>
+              </ContactItem>
             </FooterLinks>
           </FooterColumn>
         </FooterGrid>
         
         <Copyright>
-          &copy; {new Date().getFullYear()} HiQual Solutions. All rights reserved.
+          &copy; {new Date().getFullYear()} HiQual Solutions. All rights reserved. | Specialized in marketing for real estate & interior design.
         </Copyright>
       </FooterContainer>
     </FooterSection>

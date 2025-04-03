@@ -217,7 +217,7 @@ const Header = () => {
           <NavLink href="#process">Process</NavLink>
           <NavLink href="#results">Results</NavLink>
           <NavLink href="#testimonials">Testimonials</NavLink>
-          <ContactButton href="#contact">Get Started</ContactButton>
+          <ContactButton href="#contact">Get Free Consultation</ContactButton>
         </NavLinksDesktop>
         
         <MenuButton onClick={toggleMenu}>
@@ -245,7 +245,7 @@ const Header = () => {
                 <MobileNavLink href="#process" onClick={toggleMenu}>Process</MobileNavLink>
                 <MobileNavLink href="#results" onClick={toggleMenu}>Results</MobileNavLink>
                 <MobileNavLink href="#testimonials" onClick={toggleMenu}>Testimonials</MobileNavLink>
-                <MobileContactButton href="#contact" onClick={toggleMenu}>Get Started</MobileContactButton>
+                <MobileContactButton href="#contact" onClick={toggleMenu}>Get Free Consultation</MobileContactButton>
               </NavLinksMobile>
             </>
           )}

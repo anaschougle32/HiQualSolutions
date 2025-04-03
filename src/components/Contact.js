@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { supabase } from '../supabaseClient';
 
 const ContactSection = styled.section`
   padding: 8rem 0;
@@ -319,6 +320,24 @@ const SuccessMessage = styled(motion.div)`
   }
 `;
 
+const ErrorMessage = styled(motion.div)`
+  background-color: rgba(245, 101, 101, 0.1);
+  color: #c53030;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  
+  svg {
+    margin-right: 0.5rem;
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 const FormCheckbox = styled.div`
   display: flex;
   align-items: flex-start;
@@ -358,6 +377,7 @@ const Contact = () => {
   
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -367,14 +387,35 @@ const Contact = () => {
     }));
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsSubmitting(false);
+    if (!formData.name || !formData.email || !formData.message || !formData.consent) {
+      setError("Please complete all required fields");
+      return;
+    }
+    
+    try {
+      console.log("Submitting form with data:", { ...formData });
+      setIsSubmitting(true);
+      
+      console.log("Supabase URL:", process.env.REACT_APP_SUPABASE_URL || "Not defined");
+      console.log("Supabase key available:", !!process.env.REACT_APP_SUPABASE_ANON_KEY);
+      
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert([
+          { ...formData }
+        ]);
+
+      console.log("Supabase response:", { data, error });
+      
+      if (error) {
+        console.error("Supabase error:", error);
+        throw new Error(error.message || "Error submitting form");
+      }
+
+      // Reset the form
       setFormData({
         name: '',
         email: '',
@@ -382,7 +423,20 @@ const Contact = () => {
         message: '',
         consent: false
       });
-    }, 1500);
+      
+      // Show success message
+      setIsSubmitted(true);
+      setIsSubmitting(false);
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 5000);
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setError(err.message || "Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -417,23 +471,74 @@ const Contact = () => {
                 <ContactIcon>📧</ContactIcon>
                 <ContactDetailText>
                   <h4>Email Us</h4>
-                  <p>info@hiqualsolutions.com</p>
+                  <p><a href="mailto:contact@hiqualsolutions.com">contact@hiqualsolutions.com</a></p>
                 </ContactDetailText>
               </ContactDetail>
+              
+              <div style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
+                <h4 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "#2d3748", fontFamily: "'Satoshi', sans-serif" }}>Canada Office</h4>
+              </div>
               
               <ContactDetail>
                 <ContactIcon>📞</ContactIcon>
                 <ContactDetailText>
-                  <h4>Call Us</h4>
-                  <p>+1 (555) 123-4567</p>
+                  <h4>Call Us (Canada)</h4>
+                  <p><a href="tel:+19808423695">+1 980-842-3695</a></p>
                 </ContactDetailText>
               </ContactDetail>
               
               <ContactDetail>
                 <ContactIcon>📍</ContactIcon>
                 <ContactDetailText>
-                  <h4>Visit Us</h4>
-                  <p>123 Market Street, Suite 456, San Francisco, CA 94105</p>
+                  <h4>Visit Us (Canada)</h4>
+                  <p>4143 SETON DRIVE SE, CALGARY, ALBERTA, CANADA. T3M 3A6</p>
+                </ContactDetailText>
+              </ContactDetail>
+              
+              <div style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
+                <h4 style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "#2d3748", fontFamily: "'Satoshi', sans-serif" }}>India Office</h4>
+              </div>
+              
+              <ContactDetail>
+                <ContactIcon>📞</ContactIcon>
+                <ContactDetailText>
+                  <h4>Call Us (India)</h4>
+                  <p><a href="tel:+919867975473">+91 986-797-5473</a></p>
+                  <p><a href="tel:+917738816466">+91 773-881-6466</a></p>
+                </ContactDetailText>
+              </ContactDetail>
+              
+              <ContactDetail>
+                <ContactIcon>📍</ContactIcon>
+                <ContactDetailText>
+                  <h4>Visit Us (India)</h4>
+                  <p>L-205, Old Nasheman Colony, Mumbra, Thane-400612, Maharashtra, India</p>
+                </ContactDetailText>
+              </ContactDetail>
+              
+              <ContactDetail style={{ marginTop: "1rem" }}>
+                <ContactIcon>
+                  <img src={require('../assets/whatsapp.svg').default} alt="WhatsApp" style={{ width: "24px", height: "24px" }} />
+                </ContactIcon>
+                <ContactDetailText>
+                  <h4>WhatsApp</h4>
+                  <p>
+                    <a 
+                      href="https://wa.me/917738816466" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ 
+                        color: "#25D366", 
+                        fontWeight: "500",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px"
+                      }}
+                    >
+                      +91 773-881-6466
+                      <span style={{ fontSize: "0.8rem" }}>→</span>
+                    </a>
+                  </p>
                 </ContactDetailText>
               </ContactDetail>
             </ContactInfo>
@@ -457,6 +562,19 @@ const Contact = () => {
                   </svg>
                   Thank you! Your message has been sent successfully.
                 </SuccessMessage>
+              )}
+              
+              {error && (
+                <ErrorMessage
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <svg viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  {error}
+                </ErrorMessage>
               )}
               
               <InputRow>

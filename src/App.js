@@ -8,6 +8,7 @@ import Results from './components/Results';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import WhatsAppFloat from './components/WhatsAppFloat';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Testimonials />
         <Contact />
         <Footer />
+        <WhatsAppFloat />
       </div>
     </Router>
   );
