@@ -238,7 +238,7 @@ const Results = () => {
     },
     {
       icon: "📊",
-      number: "4500+",
+      number: "9500+",
       label: "Leads Generated"
     },
     {

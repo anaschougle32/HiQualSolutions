@@ -148,6 +148,16 @@ const ContactItem = styled(FooterLink)`
   }
 `;
 
+const ContactIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #FF6B35;
+  margin-right: 8px;
+`;
+
 const LocationTitle = styled.h5`
   color: white;
   font-family: 'Satoshi', sans-serif;
@@ -242,28 +252,38 @@ const Footer = () => {
             <FooterTitle>Contact Us</FooterTitle>
             <FooterLinks>
               <ContactItem>
+                <ContactIcon>📧</ContactIcon>
                 <a href="mailto:contact@hiqualsolutions.com">contact@hiqualsolutions.com</a>
               </ContactItem>
               
               <LocationTitle>Canada Office</LocationTitle>
               <ContactItem>
+                <ContactIcon>📞</ContactIcon>
                 <a href="tel:+19808423695">+1 980-842-3695</a>
               </ContactItem>
               <ContactItem>
-                4143 SETON DRIVE SE, CALGARY,<br />
-                ALBERTA, CANADA. T3M 3A6
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px' }}>📍</ContactIcon>
+                <span>
+                  4143 SETON DRIVE SE, CALGARY,<br />
+                  ALBERTA, CANADA. T3M 3A6
+                </span>
               </ContactItem>
               
               <LocationTitle>India Office</LocationTitle>
               <ContactItem>
+                <ContactIcon>📞</ContactIcon>
                 <a href="tel:+919867975473">+91 986-797-5473</a>
               </ContactItem>
               <ContactItem>
+                <ContactIcon>📞</ContactIcon>
                 <a href="tel:+917738816466">+91 773-881-6466</a>
               </ContactItem>
               <ContactItem>
-                L-205, Old Nasheman Colony, Mumbra,<br />
-                Thane-400612, Maharashtra, India
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px' }}>📍</ContactIcon>
+                <span>
+                  L-205, Old Nasheman Colony, Mumbra,<br />
+                  Thane-400612, Maharashtra, India
+                </span>
               </ContactItem>
               
               <WhatsAppButton href="https://wa.me/917738816466" target="_blank" rel="noopener noreferrer">

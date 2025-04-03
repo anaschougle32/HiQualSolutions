@@ -124,12 +124,13 @@ const ContactIcon = styled.div`
   color: #FF6B35;
   border-radius: 12px;
   margin-right: 1rem;
+  position: relative;
   
   &::after {
     content: '';
     position: absolute;
-    width: 48px;
-    height: 48px;
+    width: 100%;
+    height: 100%;
     border: 1px dashed rgba(255, 107, 53, 0.2);
     border-radius: 12px;
     top: 5px;
@@ -488,7 +489,7 @@ const Contact = () => {
               </ContactDetail>
               
               <ContactDetail>
-                <ContactIcon>📍</ContactIcon>
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '5px' }}>📍</ContactIcon>
                 <ContactDetailText>
                   <h4>Visit Us (Canada)</h4>
                   <p>4143 SETON DRIVE SE, CALGARY, ALBERTA, CANADA. T3M 3A6</p>
@@ -509,7 +510,7 @@ const Contact = () => {
               </ContactDetail>
               
               <ContactDetail>
-                <ContactIcon>📍</ContactIcon>
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '5px' }}>📍</ContactIcon>
                 <ContactDetailText>
                   <h4>Visit Us (India)</h4>
                   <p>L-205, Old Nasheman Colony, Mumbra, Thane-400612, Maharashtra, India</p>

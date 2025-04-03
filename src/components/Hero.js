@@ -85,6 +85,27 @@ const HeadingHighlight = styled.span`
   }
 `;
 
+const HeadingHighlightUnderlined = styled(HeadingHighlight)`
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding: 0 5px;
+  color: white;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #FF6B35;
+    z-index: -1;
+    border-radius: 4px;
+    transform: rotate(-2deg);
+  }
+`;
+
 const Subtitle = styled(motion.p)`
   font-size: 1.2rem;
   line-height: 1.7;
@@ -94,6 +115,12 @@ const Subtitle = styled(motion.p)`
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 600;
+`;
+
+const HighlightedText = styled.span`
+  color: #FF6B35;
+  font-weight: 700;
 `;
 
 const HeroButtons = styled(motion.div)`
@@ -170,7 +197,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Market Your <HeadingHighlight>Real Estate & Interior Design</HeadingHighlight> Business To Consistent Clients
+            Struggling To Get <HeadingHighlightUnderlined>More Clients</HeadingHighlightUnderlined> in <HeadingHighlight>Real Estate & Interior Design</HeadingHighlight> Business?
           </Title>
           
           <Subtitle
@@ -178,7 +205,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            We help real estate professionals and interior designers attract consistent, quality clients through strategic marketing, stunning portfolio design, and data-driven campaigns.
+            We help <HighlightedText>Real Estate Professionals</HighlightedText> and <HighlightedText>Interior Designers</HighlightedText> attract <HighlightedText>consistent, quality clients</HighlightedText> through strategic <HighlightedText>Lead Generation</HighlightedText> marketing campaign that brings <HighlightedText>Sales not just Leads!!</HighlightedText>
           </Subtitle>
           
           <HeroButtons
