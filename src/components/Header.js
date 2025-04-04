@@ -297,20 +297,21 @@ const ThemeToggleWrapper = styled.div`
   align-items: center;
   
   @media (max-width: 768px) {
-    margin: 0;
-    padding: 12px 15px;
-    border-radius: 12px;
-    background-color: ${({ theme }) => 
-      theme.mode === 'dark' ? 
-        'rgba(30, 30, 30, 0.8)' : 
-        'rgba(240, 240, 240, 0.8)'
-    };
-    backdrop-filter: blur(8px);
-    box-shadow: ${({ theme }) => 
-      theme.mode === 'dark' ? 
-        '0 4px 6px rgba(0, 0, 0, 0.2)' : 
-        '0 4px 6px rgba(0, 0, 0, 0.05)'
-    };
+    margin: 0 10px 0 0;
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+`;
+
+const MobileThemeToggle = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -398,8 +399,14 @@ const Header = () => {
             <NavLink href="#portfolio" scrolled={scrolled}>Portfolio</NavLink>
             <NavLink href="#results" scrolled={scrolled}>Results</NavLink>
             <NavLink href="#testimonials" scrolled={scrolled}>Testimonials</NavLink>
-            <ContactButton href="#contact">Get Free Consultation</ContactButton>
+            <ContactButton href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank">Book 1:1 Free Call</ContactButton>
           </NavLinksDesktop>
+          
+          <MobileThemeToggle>
+            <ThemeToggleWrapper theme={theme}>
+              <ThemeToggle />
+            </ThemeToggleWrapper>
+          </MobileThemeToggle>
           
           <MenuButton isOpen={isMenuOpen} onClick={toggleMenu}>
             {isMenuOpen ? '✕' : '☰'}
@@ -417,17 +424,19 @@ const Header = () => {
                 onClick={toggleMenu}
               />
               
-              <NavLinksMobile isOpen={isMenuOpen}>
+              <NavLinksMobile
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={navVariants}
+                isOpen={isMenuOpen}
+              >
                 <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
                 <MobileNavLink href="#services" onClick={toggleMenu}>Services</MobileNavLink>
                 <MobileNavLink href="#portfolio" onClick={toggleMenu}>Portfolio</MobileNavLink>
                 <MobileNavLink href="#results" onClick={toggleMenu}>Results</MobileNavLink>
                 <MobileNavLink href="#testimonials" onClick={toggleMenu}>Testimonials</MobileNavLink>
-                <MobileContactButton href="#contact" onClick={toggleMenu}>Get Free Consultation</MobileContactButton>
-                <Divider />
-                <ThemeToggleWrapper theme={theme}>
-                  <ThemeToggle />
-                </ThemeToggleWrapper>
+                <MobileContactButton href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank" onClick={toggleMenu}>Book 1:1 Free Consultation</MobileContactButton>
               </NavLinksMobile>
             </>
           )}

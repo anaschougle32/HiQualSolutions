@@ -322,8 +322,8 @@ const Footer = () => {
               </WhatsAppButton>
               
               <ContactItem style={{ marginTop: "15px" }}>
-                <a href="#contact" style={{ color: "#FF6B35", fontWeight: "500" }}>
-                  Get a Free Consultation →
+                <a href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank" rel="noopener noreferrer" style={{ color: "#FF6B35", fontWeight: "500" }}>
+                  Book 1:1 Free Call →
                 </a>
               </ContactItem>
             </FooterLinks>

@@ -258,7 +258,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <PrimaryButton href="#contact">Get Free Consultation</PrimaryButton>
+            <PrimaryButton href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank">Book 1:1 Free Call</PrimaryButton>
             <SecondaryButton href="#process">Learn More</SecondaryButton>
           </HeroButtons>
         </HeroContent>
