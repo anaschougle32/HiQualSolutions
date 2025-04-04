@@ -400,7 +400,7 @@ const Header = () => {
           <NavLinksDesktop>
             <NavLink href="#about" scrolled={scrolled}>About</NavLink>
             <NavLink href="#services" scrolled={scrolled}>Services</NavLink>
-            <NavLink href="#portfolio" scrolled={scrolled}>Portfolio</NavLink>
+            <NavLink href="#clients" scrolled={scrolled}>Our Clients</NavLink>
             <NavLink href="#results" scrolled={scrolled}>Results</NavLink>
             <NavLink href="#testimonials" scrolled={scrolled}>Testimonials</NavLink>
             <ContactButton href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank">Book 1:1 Free Call</ContactButton>
@@ -437,7 +437,7 @@ const Header = () => {
               >
                 <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
                 <MobileNavLink href="#services" onClick={toggleMenu}>Services</MobileNavLink>
-                <MobileNavLink href="#portfolio" onClick={toggleMenu}>Portfolio</MobileNavLink>
+                <MobileNavLink href="#clients" onClick={toggleMenu}>Our Clients</MobileNavLink>
                 <MobileNavLink href="#results" onClick={toggleMenu}>Results</MobileNavLink>
                 <MobileNavLink href="#testimonials" onClick={toggleMenu}>Testimonials</MobileNavLink>
                 <MobileContactButton href="https://calendly.com/hiqualsoftwaresolutions/interior-design-growth-consultation" target="_blank" onClick={toggleMenu}>Book 1:1 Free Consultation</MobileContactButton>
