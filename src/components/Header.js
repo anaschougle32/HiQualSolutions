@@ -297,21 +297,25 @@ const ThemeToggleWrapper = styled.div`
   align-items: center;
   
   @media (max-width: 768px) {
-    margin: 0 10px 0 0;
+    margin: 0;
     padding: 0;
-    border-radius: 0;
-    background-color: transparent;
-    backdrop-filter: none;
+    background: transparent;
+    border: none;
+    outline: none;
     box-shadow: none;
   }
 `;
 
 const MobileThemeToggle = styled.div`
   display: none;
+  background: transparent;
+  border: none;
+  outline: none;
   
   @media (max-width: 768px) {
     display: flex;
     align-items: center;
+    margin-right: 15px;
   }
 `;
 

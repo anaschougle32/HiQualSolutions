@@ -8,6 +8,9 @@ const ToggleWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
 `;
 
 const ToggleButton = styled.button`
@@ -24,6 +27,7 @@ const ToggleButton = styled.button`
   };
   position: relative;
   border: none;
+  outline: none;
   cursor: pointer;
   padding: 4px;
   overflow: hidden;
