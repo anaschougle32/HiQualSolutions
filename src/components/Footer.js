@@ -11,6 +11,8 @@ const FooterSection = styled.section`
   color: #B0B0B0;
   position: relative;
   overflow: hidden;
+  border: none;
+  outline: none;
   
   &::before {
     content: "";
@@ -33,12 +35,16 @@ const FooterContainer = styled.div`
   padding: 0 2rem;
   position: relative;
   z-index: 1;
+  border: none;
+  outline: none;
 `;
 
 const FooterGrid = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 3rem;
+  border: none;
+  outline: none;
   
   @media (max-width: 992px) {
     grid-template-columns: 1fr 1fr;
@@ -73,7 +79,10 @@ const FooterText = styled.p`
 
 const SocialIcons = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  border: none;
+  outline: none;
 `;
 
 const SocialIcon = styled.a`
@@ -88,6 +97,8 @@ const SocialIcon = styled.a`
   text-decoration: none;
   font-size: 1.1rem;
   transition: all 0.3s ease;
+  border: none;
+  outline: none;
   
   &:hover {
     background-color: #FF6B35;
@@ -119,6 +130,9 @@ const FooterTitle = styled.h4`
 const FooterLinks = styled.ul`
   list-style: none;
   padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
 `;
 
 const FooterLink = styled.li`
@@ -142,9 +156,10 @@ const FooterLink = styled.li`
 const ContactItem = styled(FooterLink)`
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 15px;
   color: #B0B0B0;
   font-family: 'Poppins', sans-serif;
+  margin-bottom: 1.2rem;
   
   a {
     display: inline-block;
@@ -160,21 +175,25 @@ const ContactIcon = styled.span`
   background-color: rgba(255, 107, 53, 0.15);
   color: #FF6B35;
   border-radius: 8px;
-  margin-right: 10px;
+  margin-right: 12px;
   font-size: 1rem;
   box-shadow: 0 3px 10px rgba(255, 107, 53, 0.15);
+  position: relative;
+  border: none;
+  outline: none;
   
   &::after {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     border: 1px dashed rgba(255, 107, 53, 0.3);
-    border-radius: 8px;
-    top: 3px;
-    left: 3px;
-    opacity: 0.7;
+    border-radius: 6px;
+    top: 4px;
+    left: 4px;
+    opacity: 0.5;
     z-index: -1;
+    pointer-events: none;
   }
 `;
 
@@ -182,7 +201,7 @@ const LocationTitle = styled.h5`
   color: white;
   font-family: 'Satoshi', sans-serif;
   font-size: 1rem;
-  margin: 1.2rem 0 0.8rem;
+  margin: 1.5rem 0 1rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
 `;
@@ -223,6 +242,17 @@ const Copyright = styled.div`
   font-family: 'Poppins', sans-serif;
 `;
 
+// Add a new styled component for address text
+const AddressText = styled.span`
+  display: inline-block;
+  line-height: 1.6;
+  color: #B0B0B0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  border: none;
+  outline: none;
+`;
+
 const Footer = () => {
   const theme = useContext(ThemeContext);
 
@@ -231,7 +261,7 @@ const Footer = () => {
       <FooterContainer>
         <FooterGrid>
           <FooterColumn>
-            <FooterLogo>HiQual Solutions</FooterLogo>
+            <FooterLogo>HiQual DigiTech Solutions</FooterLogo>
             <FooterText>
               We specialize in strategic marketing for real estate professionals and interior designers. Our data-driven approach helps you attract consistent clients, showcase your properties and designs effectively, and build a strong market presence.
             </FooterText>
@@ -292,11 +322,11 @@ const Footer = () => {
                 <a href="tel:+19808423695">+1 980-842-3695</a>
               </ContactItem>
               <ContactItem>
-                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px' }}>📍</ContactIcon>
-                <span>
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px', border: 'none' }}>📍</ContactIcon>
+                <AddressText>
                   4143 SETON DRIVE SE, CALGARY,<br />
                   ALBERTA, CANADA. T3M 3A6
-                </span>
+                </AddressText>
               </ContactItem>
               
               <LocationTitle>India Office</LocationTitle>
@@ -309,11 +339,11 @@ const Footer = () => {
                 <a href="tel:+917738816466">+91 773-881-6466</a>
               </ContactItem>
               <ContactItem>
-                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px' }}>📍</ContactIcon>
-                <span>
+                <ContactIcon style={{ alignSelf: 'flex-start', marginTop: '3px', border: 'none' }}>📍</ContactIcon>
+                <AddressText>
                   L-205, Old Nasheman Colony, Mumbra,<br />
                   Thane-400612, Maharashtra, India
-                </span>
+                </AddressText>
               </ContactItem>
               
               <WhatsAppButton href="https://wa.me/917738816466" target="_blank" rel="noopener noreferrer">
@@ -331,7 +361,7 @@ const Footer = () => {
         </FooterGrid>
         
         <Copyright>
-          &copy; {new Date().getFullYear()} HiQual Solutions. All rights reserved. | Specialized in marketing for real estate & interior design.
+          &copy; {new Date().getFullYear()} HiQual DigiTech Solutions. All rights reserved. | Specialized in marketing for real estate & interior design.
         </Copyright>
       </FooterContainer>
     </FooterSection>
