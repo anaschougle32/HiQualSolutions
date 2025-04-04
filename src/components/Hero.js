@@ -250,7 +250,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            We help <HighlightedText>Real Estate Professionals</HighlightedText> and <HighlightedText>Interior Designers</HighlightedText> attract <HighlightedText>consistent, quality clients</HighlightedText> through strategic <HighlightedText>Lead Generation</HighlightedText> marketing campaign that brings <HighlightedText>Sales not just Leads!!</HighlightedText>
+            We help <HighlightedText>Real Estate Professionals</HighlightedText> and <HighlightedText>Interior Designers</HighlightedText> attract <HighlightedText>consistent, quality clients</HighlightedText> through strategic <HighlightedText>Lead Generation</HighlightedText> marketing campaign that brings <HeadingHighlightUnderlined>Sales not just Leads!!</HeadingHighlightUnderlined><HighlightedText></HighlightedText>
           </Subtitle>
           
           <HeroButtons
